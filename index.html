@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portal de prueba para precalificación y simulación Mejoravit." />
+  <meta name="theme-color" content="#b3132b" />
+  <title>Portal Mejoravit | Simulación</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Inicio">
+        <span class="brand-mark">M</span>
+        <span>
+          <strong>Portal Mejoravit</strong>
+          <small>Simulación y acompañamiento</small>
+        </span>
+      </a>
+      <div class="privacy-chip" title="En esta versión de prueba el documento se procesa en el navegador.">
+        <span class="dot"></span>
+        Procesamiento local
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">EXPERIENCIA DE PRUEBA</span>
+          <h1>Conoce tu escenario de crédito de forma clara y acompañada.</h1>
+          <p>Completa tus datos, carga tu documento oficial y revisa la información antes de generar tu comparativo.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-stat"><strong>4</strong><span>pasos sencillos</span></div>
+          <div class="hero-stat"><strong>PDF</strong><span>comparativo descargable</span></div>
+          <div class="hero-stat"><strong>Local</strong><span>sin guardar tu archivo</span></div>
+        </div>
+      </section>
+
+      <section class="portal-card">
+        <nav class="stepper" aria-label="Progreso">
+          <button class="step is-active" data-step-nav="1"><span>1</span><b>Datos</b></button>
+          <div class="step-line"></div>
+          <button class="step" data-step-nav="2"><span>2</span><b>Documento</b></button>
+          <div class="step-line"></div>
+          <button class="step" data-step-nav="3"><span>3</span><b>Revisión</b></button>
+          <div class="step-line"></div>
+          <button class="step" data-step-nav="4"><span>4</span><b>Resultado</b></button>
+        </nav>
+
+        <div id="globalMessage" class="message" hidden></div>
+
+        <section class="step-panel is-active" data-step-panel="1">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">PASO 1</span>
+              <h2>Cuéntanos lo necesario para orientarte</h2>
+              <p>Solo pedimos datos básicos para personalizar el comparativo. En este modo de prueba no se almacenan.</p>
+            </div>
+            <div class="icon-badge">01</div>
+          </div>
+
+          <form id="prospectForm" class="form-grid" novalidate>
+            <label class="field field-wide">
+              <span>Nombre completo *</span>
+              <input id="fullName" autocomplete="name" placeholder="Ej. Mariana López Hernández" required />
+            </label>
+            <label class="field">
+              <span>WhatsApp *</span>
+              <input id="phone" inputmode="tel" autocomplete="tel" placeholder="55 1234 5678" required />
+            </label>
+            <label class="field">
+              <span>Correo electrónico</span>
+              <input id="email" type="email" autocomplete="email" placeholder="correo@ejemplo.com" />
+            </label>
+
+            <fieldset class="field field-wide choice-field">
+              <legend>¿Actualmente trabajas y cotizas al IMSS? *</legend>
+              <div class="segmented" id="imssChoices">
+                <label><input type="radio" name="imss" value="Sí" required /><span>Sí, actualmente</span></label>
+                <label><input type="radio" name="imss" value="No" /><span>No por ahora</span></label>
+                <label><input type="radio" name="imss" value="No sé" /><span>No estoy seguro</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="field field-wide choice-field">
+              <legend>¿Tienes actualmente un crédito Infonavit vigente?</legend>
+              <div class="segmented">
+                <label><input type="radio" name="activeCredit" value="No" checked /><span>No</span></label>
+                <label><input type="radio" name="activeCredit" value="Sí" /><span>Sí</span></label>
+                <label><input type="radio" name="activeCredit" value="No sé" /><span>No estoy seguro</span></label>
+              </div>
+            </fieldset>
+
+            <label class="field field-wide">
+              <span>¿Para qué te gustaría utilizar el crédito?</span>
+              <select id="purpose">
+                <option value="Mejoras de vivienda">Mejoras de vivienda</option>
+                <option value="Remodelación">Remodelación</option>
+                <option value="Reparaciones">Reparaciones</option>
+                <option value="Equipamiento">Equipamiento</option>
+                <option value="Quiero conocer opciones">Quiero conocer opciones</option>
+              </select>
+            </label>
+
+            <label class="consent field-wide">
+              <input id="consent" type="checkbox" required />
+              <span>Confirmo que la información que proporcionaré es mía y autorizo su uso únicamente para elaborar esta simulación de prueba.</span>
+            </label>
+          </form>
+
+          <div class="actions actions-end">
+            <button class="btn btn-primary" id="goStep2">Continuar <span>→</span></button>
+          </div>
+        </section>
+
+        <section class="step-panel" data-step-panel="2">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">PASO 2</span>
+              <h2>Sube tu documento oficial</h2>
+              <p>El PDF oficial suele dar una lectura más precisa. También puedes probar con una imagen o captura.</p>
+            </div>
+            <div class="icon-badge">02</div>
+          </div>
+
+          <div class="privacy-note">
+            <strong>Privacidad de esta versión:</strong> el archivo se procesa directamente en tu navegador. No se sube a una base de datos ni se guarda en el sitio.
+          </div>
+
+          <label class="dropzone" id="dropzone" for="documentInput">
+            <input id="documentInput" type="file" accept="application/pdf,image/png,image/jpeg" />
+            <div class="upload-icon">↑</div>
+            <h3>Arrastra tu PDF o imagen aquí</h3>
+            <p>o haz clic para seleccionar un archivo</p>
+            <span>PDF, JPG o PNG · máximo recomendado 12 MB</span>
+          </label>
+
+          <div id="fileCard" class="file-card" hidden>
+            <div class="file-icon">PDF</div>
+            <div class="file-meta">
+              <strong id="fileName">archivo.pdf</strong>
+              <span id="fileSize">0 MB</span>
+            </div>
+            <button class="icon-button" id="removeFile" aria-label="Quitar archivo">×</button>
+          </div>
+
+          <div id="processingBox" class="processing-box" hidden>
+            <div class="spinner"></div>
+            <div>
+              <strong id="processingTitle">Leyendo tu documento…</strong>
+              <span id="processingDetail">Esto puede tardar unos segundos.</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost" data-back="1">← Regresar</button>
+            <button class="btn btn-primary" id="processDocument" disabled>Procesar documento <span>→</span></button>
+          </div>
+        </section>
+
+        <section class="step-panel" data-step-panel="3">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">PASO 3</span>
+              <h2>Revisa lo que detectamos</h2>
+              <p>Antes de generar cualquier comparativo, confirma que los datos coincidan con tu documento original.</p>
+            </div>
+            <div class="icon-badge">03</div>
+          </div>
+
+          <div id="sourceAlert" class="source-alert" hidden></div>
+
+          <div class="review-grid">
+            <label class="field"><span>NSS</span><input id="nss" inputmode="numeric" maxlength="11" /></label>
+            <label class="field"><span>Monto del crédito</span><input id="creditAmount" type="number" step="0.01" /></label>
+            <label class="field"><span>Tasa anual (%)</span><input id="annualRate" type="number" step="0.01" /></label>
+            <label class="field"><span>CAT (%)</span><input id="cat" type="number" step="0.01" /></label>
+          </div>
+
+          <div class="table-head">
+            <div>
+              <h3>Tabla de amortización</h3>
+              <p id="rowCountText">0 filas detectadas</p>
+            </div>
+            <button class="btn btn-small btn-ghost" id="addRow">+ Agregar fila</button>
+          </div>
+
+          <div class="table-wrap">
+            <table id="amortizationTable">
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Saldo inicial</th>
+                  <th>Interés</th>
+                  <th>Tu retención</th>
+                  <th>Patrón aporta</th>
+                  <th>Saldo final</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div id="validationBox" class="validation-box" hidden></div>
+
+          <div class="actions">
+            <button class="btn btn-ghost" data-back="2">← Regresar</button>
+            <button class="btn btn-secondary" id="validateData">Validar cifras</button>
+            <button class="btn btn-primary" id="goResult" disabled>Ver mi comparativo <span>→</span></button>
+          </div>
+        </section>
+
+        <section class="step-panel" data-step-panel="4">
+          <div class="result-hero">
+            <span class="success-check">✓</span>
+            <div>
+              <span class="section-kicker">PASO 4</span>
+              <h2>Tu comparativo está listo</h2>
+              <p id="resultGreeting">Revisa el resumen antes de descargarlo.</p>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card accent">
+              <span>Monto del crédito</span>
+              <strong id="metricAmount">$0</strong>
+              <small>Monto detectado en tu documento</small>
+            </article>
+            <article class="metric-card">
+              <span>Tu retención mensual</span>
+              <strong id="metricRetention">$0</strong>
+              <small>Descuento mensual estimado</small>
+            </article>
+            <article class="metric-card">
+              <span>Aportación patronal</span>
+              <strong id="metricEmployer">$0</strong>
+              <small>Aportación estimada por mes</small>
+            </article>
+            <article class="metric-card">
+              <span>Plazo con aportación</span>
+              <strong id="metricMonths">0 meses</strong>
+              <small>Según la tabla oficial</small>
+            </article>
+          </div>
+
+          <section class="comparison-card">
+            <div class="comparison-title">
+              <div>
+                <span class="section-kicker">COMPARATIVO</span>
+                <h3>Impacto de la aportación patronal</h3>
+              </div>
+              <span class="saving-pill" id="savingPill">Calculando…</span>
+            </div>
+            <div class="comparison-columns">
+              <div class="comparison-option recommended">
+                <span class="option-label">Con aportación patronal</span>
+                <strong id="withEmployerMonths">—</strong>
+                <small>meses para liquidar</small>
+                <div class="bar"><span id="withEmployerBar"></span></div>
+              </div>
+              <div class="comparison-option">
+                <span class="option-label">Solo con tu retención</span>
+                <strong id="withoutEmployerMonths">—</strong>
+                <small>meses estimados</small>
+                <div class="bar muted"><span id="withoutEmployerBar"></span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="fees-card">
+            <div>
+              <span class="section-kicker">CONFIGURACIÓN DE PRUEBA</span>
+              <h3>Resumen de honorarios y monto neto</h3>
+              <p>Estos parámetros pueden modificarse en <code>assets/config.js</code> antes de publicar.</p>
+            </div>
+            <dl>
+              <div><dt>Honorarios porcentuales</dt><dd id="feePercent">—</dd></div>
+              <div><dt>Cuota fija</dt><dd id="fixedFee">—</dd></div>
+              <div class="total"><dt>Total de honorarios</dt><dd id="totalFees">—</dd></div>
+              <div class="net"><dt>Monto neto estimado</dt><dd id="netAmount">—</dd></div>
+            </dl>
+          </section>
+
+          <div class="result-actions">
+            <button class="btn btn-ghost" data-back="3">← Revisar datos</button>
+            <button class="btn btn-secondary" id="copySummary">Copiar resumen</button>
+            <button class="btn btn-primary" id="downloadPdf">Descargar comparativo PDF</button>
+          </div>
+
+          <div class="final-note">
+            <strong>Importante:</strong> esta herramienta es independiente y genera una simulación informativa a partir del documento proporcionado. No es un sitio oficial de INFONAVIT ni constituye una oferta formal de crédito.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <span>Portal de prueba · Mejoravit</span>
+      <button id="clearSession" class="link-button">Borrar datos de esta sesión</button>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
